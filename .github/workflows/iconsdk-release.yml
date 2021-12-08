@@ -32,8 +32,7 @@ jobs:
       - name: Run Test
         run: |
           python -m pytest -ra
-      - name: cache dist
-        if: false
+      - name: Cache dist
         id: dist_cache
         uses: actions/cache@v2
         with:
