@@ -1,9 +1,9 @@
 name: publish to pypi
 on:
-  - push:
-  - release:
+  push:
+  release:
     types: [published]
-  - workflow_dispatch:
+  workflow_dispatch:
     inputs:
       test_deploy:
       description: 'test deploy to https://test.pypi.org'
