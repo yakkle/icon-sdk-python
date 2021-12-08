@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
     inputs:
       test_deploy:
-      description: 'test deploy to https://test.pypi.org'
-      required: false
-      default: 'false'
+        description: 'test deploy to https://test.pypi.org'
+        required: false
+        default: 'false'
 
 jobs:
   build:
