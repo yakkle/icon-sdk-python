@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: [3.7, 3.8]
 
     steps:
       - uses: actions/checkout@v2
@@ -85,6 +85,7 @@ jobs:
         run: |
           echo "check dists"
           ls -al
+          ls -al dist
       - name: Publish package to TestPyPI
         if: false
         uses: pypa/gh-action-pypi-publish@release/v1
