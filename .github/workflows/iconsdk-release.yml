@@ -1,6 +1,6 @@
 name: publish to pypi
 on:
-  push:
+  # push:
   release:
     types: [published]
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8]
+        python-version: [3.7]
 
     steps:
       - uses: actions/checkout@v2
@@ -32,15 +32,34 @@ jobs:
       - name: Run Test
         run: |
           python -m pytest -ra
+      - name: cache dist
+        if: false
+        id: dist_cache
+        uses: actions/cache@v2
+        with:
+          path: ./dist
+          key: ${{ runner.os }}-${{ matrix.ptyhon-version }}-dist-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-dist-
       - name: Build package
+        if: github.event_name == 'release' || github.event.inputs.test_deploy == 'true'
         run: |
           python setup.py sdist bdist_wheel
+          ls -al dist
+      - name: upload artifact
+        if: false
+        run: echo "upload artifact"
   deploy:
     needs: build
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
+      - name: download artifact
+        if: false
+        uses: actions/download-artifact@v2
+
       - name: Publish package
+        if: success()
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
