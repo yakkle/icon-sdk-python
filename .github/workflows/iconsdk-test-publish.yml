@@ -56,8 +56,7 @@ jobs:
         if: steps.dist_cache.outputs.cache-hit != 'true'
         run: |
           python setup.py sdist bdist_wheel
-          echo "show dist packages"
-          ls -al dist
+          echo "::notice:: $(ls -al dist)"
       - name: Publish package to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
